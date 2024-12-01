@@ -1,27 +1,49 @@
 {
   "name": "web",
-  "version": "0.1.0",
   "type": "module",
+  "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "next dev --turbopack",
-    "build": "next build",
-    "start": "next start",
-    "lint": "next lint --max-warnings 0",
-    "check-types": "tsc --noEmit"
+    "dev": "vite",
+    "build": "tsc -b && vite build",
+    "lint": "eslint . --fix",
+    "format": "prettier --write .",
+    "preview": "vite preview",
+    "gen-api": "orval --config ./orval.config.ts"
   },
   "dependencies": {
-    "@repo/ui": "workspace:*",
-    "next": "15.0.3",
-    "react": "19.0.0-rc-66855b96-20241106",
-    "react-dom": "19.0.0-rc-66855b96-20241106"
+    "@radix-ui/react-slot": "^1.1.0",
+    "@siberiacancode/reactuse": "^0.0.73",
+    "@tanstack/react-query": "^5.61.5",
+    "@tanstack/react-query-devtools": "^5.62.0",
+    "@tanstack/react-router": "^1.84.0",
+    "class-variance-authority": "^0.7.1",
+    "clsx": "^2.1.1",
+    "lucide-react": "^0.462.0",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "tailwind-merge": "^2.5.5",
+    "tailwindcss-animate": "^1.0.7"
   },
   "devDependencies": {
-    "@repo/eslint-config": "workspace:*",
-    "@repo/typescript-config": "workspace:*",
-    "@types/node": "^20",
-    "@types/react": "18.3.1",
-    "@types/react-dom": "18.3.0",
-    "typescript": "5.5.4"
+    "@eslint/js": "^9.15.0",
+    "@old7even/eslint": "^1.0.0",
+    "@old7even/prettier": "^1.0.0",
+    "@tanstack/eslint-plugin-query": "^5.61.6",
+    "@tanstack/eslint-plugin-router": "^1.82.12",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@vitejs/plugin-react": "^4.3.4",
+    "autoprefixer": "^10.4.20",
+    "eslint": "^9.15.0",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-react-refresh": "^0.4.14",
+    "globals": "^15.12.0",
+    "orval": "^7.3.0",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.15",
+    "typescript": "~5.6.2",
+    "typescript-eslint": "^8.15.0",
+    "vite": "^6.0.1"
   }
 }

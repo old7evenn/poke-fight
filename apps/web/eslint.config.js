@@ -1,4 +1,25 @@
-import { nextJsConfig } from "@repo/eslint-config/next-js";
+import { eslint } from '@old7even/eslint';
+import pluginTanstackQuery from '@tanstack/eslint-plugin-query';
+import pluginTanstackRouter from '@tanstack/eslint-plugin-router';
 
-/** @type {import("eslint").Linter.Config} */
-export default nextJsConfig;
+export default eslint(
+  {
+    typescript: true,
+    react: true,
+    jsx: true
+  },
+  {
+    plugins: {
+      '@tanstack/query': pluginTanstackQuery
+    },
+    name: 'tanstack-query',
+    ...pluginTanstackQuery.configs.recomended
+  },
+  {
+    plugins: {
+      '@tanstack/router': pluginTanstackRouter
+    },
+    name: 'tanstack-router',
+    ...pluginTanstackRouter.configs.recomended
+  }
+);

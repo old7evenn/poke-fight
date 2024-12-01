@@ -3,12 +3,14 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "inputs": ["$TURBO_DEFAULT$", ".env*"],
-      "outputs": [".next/**", "!.next/cache/**"]
+      "dependsOn": ["^build"]
     },
+    "format": {},
     "lint": {
       "dependsOn": ["^lint"]
+    },
+    "pretty": {
+      "dependsOn": ["^format", "^lint"]
     },
     "check-types": {
       "dependsOn": ["^check-types"]
