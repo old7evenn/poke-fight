@@ -5,6 +5,6 @@
  */
 
 export type MachineListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

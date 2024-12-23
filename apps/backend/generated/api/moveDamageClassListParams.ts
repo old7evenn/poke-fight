@@ -5,6 +5,6 @@
  */
 
 export type MoveDamageClassListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

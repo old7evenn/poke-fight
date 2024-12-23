@@ -5,6 +5,6 @@
  */
 
 export type BerryFlavorListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

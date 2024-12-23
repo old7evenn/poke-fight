@@ -64,10 +64,10 @@ const PokemonCardImage = React.forwardRef<HTMLImageElement, React.ComponentProps
     if (!src) return null;
 
     return (
-      <div className='absolute top-0 left-0 w-full h-full flex justify-center items-center'>
+      <div className="absolute top-0 left-0 w-full h-full flex justify-center items-center">
         <img
           ref={ref}
-          alt='pokemon'
+          alt="pokemon"
           className={cn('min-h-52 min-w-52 select-none', className)}
           src={src}
           style={{ imageRendering: 'pixelated' }}
@@ -114,7 +114,7 @@ const PokemonCardDescription = React.forwardRef<
 >(({ className, ...props }, ref) => (
   <CardDescription
     ref={ref}
-    className={cn('text-white text-xs font-light', className)}
+    className={cn('text-white text-xs font-normal', className)}
     {...props}
   />
 ));
@@ -124,7 +124,7 @@ export const pokemonTypesVariants = cva<{ type: Record<string, string> }>(
   'rounded-lg text-[10px] py-0.5 px-2 text-white capitalize font-bold',
   {
     defaultVariants: {
-      type: 'grass'
+      type: 'grass',
     },
     variants: {
       type: {
@@ -143,9 +143,9 @@ export const pokemonTypesVariants = cva<{ type: Record<string, string> }>(
         poison: 'bg-violet-600 dark:violet-500',
         rock: 'bg-stone-600 dark:stone-500',
         steel: 'bg-zinc-600 dark:zinc-500',
-        water: 'bg-blue-600 dark:blue-500'
-      }
-    }
+        water: 'bg-blue-600 dark:blue-500',
+      },
+    },
   }
 );
 
@@ -169,8 +169,8 @@ const PokemonCardTypes = React.forwardRef<HTMLDivElement, React.ComponentProps<'
 
     return (
       <div ref={ref} className={cn('flex gap-1', className)} {...props}>
-        {types.map((type) => (
-          <PokemonCardType key={type} className='text-white'>
+        {types.map(type => (
+          <PokemonCardType key={type} className="text-white">
             {type}
           </PokemonCardType>
         ))}
@@ -188,5 +188,5 @@ export {
   PokemonCardImage,
   PokemonCardTitle,
   PokemonCardType,
-  PokemonCardTypes
+  PokemonCardTypes,
 };

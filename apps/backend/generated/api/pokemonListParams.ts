@@ -5,6 +5,6 @@
  */
 
 export type PokemonListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

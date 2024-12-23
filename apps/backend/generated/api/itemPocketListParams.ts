@@ -5,6 +5,6 @@
  */
 
 export type ItemPocketListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

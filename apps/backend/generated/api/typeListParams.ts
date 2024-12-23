@@ -5,6 +5,6 @@
  */
 
 export type TypeListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

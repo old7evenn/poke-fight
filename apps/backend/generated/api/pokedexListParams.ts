@@ -5,6 +5,6 @@
  */
 
 export type PokedexListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

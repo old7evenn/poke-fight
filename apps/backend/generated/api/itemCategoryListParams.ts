@@ -5,6 +5,6 @@
  */
 
 export type ItemCategoryListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

@@ -6,20 +6,20 @@ export default eslint(
   {
     typescript: true,
     react: true,
-    jsx: true
+    jsx: true,
   },
   {
     plugins: {
-      '@tanstack/query': pluginTanstackQuery
+      '@tanstack/query': pluginTanstackQuery,
     },
     name: 'tanstack-query',
-    ...pluginTanstackQuery.configs.recomended
+    ...pluginTanstackQuery.configs.recomended,
   },
   {
     plugins: {
-      '@tanstack/router': pluginTanstackRouter
+      '@tanstack/router': pluginTanstackRouter,
     },
     name: 'tanstack-router',
-    ...pluginTanstackRouter.configs.recomended
+    ...pluginTanstackRouter.configs.recomended,
   }
 );

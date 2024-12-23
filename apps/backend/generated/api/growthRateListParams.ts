@@ -5,6 +5,6 @@
  */
 
 export type GrowthRateListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

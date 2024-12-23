@@ -5,6 +5,6 @@
  */
 
 export type GenerationListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

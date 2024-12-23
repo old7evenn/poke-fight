@@ -5,6 +5,6 @@
  */
 
 export type VersionListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

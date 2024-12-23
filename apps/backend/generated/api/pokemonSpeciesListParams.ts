@@ -5,6 +5,6 @@
  */
 
 export type PokemonSpeciesListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };

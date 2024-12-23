@@ -5,6 +5,6 @@
  */
 
 export type MoveTargetListParams = {
-limit?: number;
-offset?: number;
+  limit?: number;
+  offset?: number;
 };
