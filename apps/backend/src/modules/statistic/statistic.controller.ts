@@ -26,64 +26,6 @@ export class StatisticController extends BaseResolver {
     super();
   }
 
-  @Get('/:pokemonId')
-  @ApiOperation({ summary: 'Get statistic' })
-  @ApiParam({
-    name: 'pokemonId',
-    type: String,
-    description: 'Pokemon ID',
-    example: '1',
-  })
-  @ApiResponse({
-    status: 200,
-    description: 'pokemon statistic',
-    type: StatisticResponse,
-  })
-  async getStatistic(@Param() getStatisticDto: { pokemonId: string }): Promise<StatisticResponse> {
-    const statistic = await this.statisticPokemonService.findOne({
-      where: { pokemonId: Number(getStatisticDto.pokemonId) },
-    });
-    return this.wrapSuccess({ statistic });
-  }
-
-  @Post('/action')
-  @ApiOperation({ summary: 'Create statistic' })
-  @ApiBody({ type: ActionPokemonDto })
-  @ApiResponse({
-    status: 200,
-    description: 'Create statistic',
-    type: BaseResponse,
-  })
-  async actionPokemonStatistic(
-    @Body()
-    actionPokemonStatisticDto: {
-      pokemonId: number;
-      action: 'pass' | 'smash';
-    }
-  ): Promise<BaseResponse> {
-    const existedStatistic = await this.statisticPokemonService.findOne({
-      where: { pokemonId: actionPokemonStatisticDto.pokemonId },
-    });
-
-    if (!existedStatistic) {
-      await this.statisticPokemonService.insert({
-        pokemonId: actionPokemonStatisticDto.pokemonId,
-        pass: 0,
-        smash: 0,
-        [actionPokemonStatisticDto.action]: 1,
-      });
-
-      return this.wrapSuccess();
-    } else {
-      await this.statisticPokemonService.save({
-        ...existedStatistic,
-        [actionPokemonStatisticDto.action]: existedStatistic[actionPokemonStatisticDto.action] + 1,
-      });
-
-      return this.wrapSuccess();
-    }
-  }
-
   @Get('/pokemons')
   @ApiOperation({ summary: 'get pokemons' })
   @ApiQuery({
@@ -125,17 +67,25 @@ export class StatisticController extends BaseResolver {
       'statistic.pokemonId = pokemon.pokemonId'
     ) as SelectQueryBuilder<PokemonStatistic>;
 
+    pokemonQuery.addSelect(`
+      CASE
+        WHEN statistic.smash IS NULL AND statistic.pass IS NULL THEN 0
+        ELSE statistic.smash + statistic.pass
+      END
+    `, 'raiting');
+
+    pokemonQuery.orderBy('raiting', 'DESC');
+
+
     if (getPokemonDto.name) {
-      pokemonQuery.andWhere('pokemon.name ILIKE :name', {
-        name: `%${getPokemonDto.name}%`,
-      });
-    }
-    if (getPokemonDto.types && Array.isArray(getPokemonDto.types) && getPokemonDto.types.length) {
-      pokemonQuery.where('pokemon.types && :types', {
-        types: getPokemonDto.types,
-      });
+      pokemonQuery.where('pokemon.name ILIKE :name', { name: `%${getPokemonDto.name}%` });
     }
 
+    if (getPokemonDto.types && Array.isArray(getPokemonDto.types) && getPokemonDto.types.length) {
+      pokemonQuery.where('pokemon.types && :types', { types: getPokemonDto.types });
+    }
+
+    
     pokemonQuery.skip(getPokemonDto.offset).take(getPokemonDto.limit);
 
     const [pokemons, itemCount] = await pokemonQuery.getManyAndCount();
@@ -156,5 +106,63 @@ export class StatisticController extends BaseResolver {
     };
 
     return this.wrapSuccess({ response });
+  }
+
+  @Get('/:pokemonId')
+  @ApiOperation({ summary: 'Get statistic' })
+  @ApiParam({
+    name: 'pokemonId',
+    type: String,
+    description: 'Pokemon ID',
+    example: '1',
+  })
+  @ApiResponse({
+    status: 200,
+    description: 'pokemon statistic',
+    type: StatisticResponse,
+  })
+  async getStatistic(@Param() getStatisticDto: { pokemonId: string }): Promise<StatisticResponse> {
+    const statistic = await this.statisticPokemonService.findOne({
+      where: { pokemonId: Number(getStatisticDto.pokemonId) },
+    });
+    return this.wrapSuccess({ statistic });
+  }
+  
+  @Post('/action')
+  @ApiOperation({ summary: 'Create statistic' })
+  @ApiBody({ type: ActionPokemonDto })
+  @ApiResponse({
+    status: 200,
+    description: 'Create statistic',
+    type: BaseResponse,
+  })
+  async actionPokemonStatistic(
+    @Body()
+    actionPokemonStatisticDto: {
+      pokemonId: number;
+      action: 'pass' | 'smash';
+    }
+  ): Promise<BaseResponse> {
+    const existedStatistic = await this.statisticPokemonService.findOne({
+      where: { pokemonId: actionPokemonStatisticDto.pokemonId },
+    });
+
+    if (!existedStatistic) {
+      await this.statisticPokemonService.insert({
+        pokemonId: actionPokemonStatisticDto.pokemonId,
+        pass: 0,
+        smash: 0,
+        [actionPokemonStatisticDto.action]: 1,
+      });
+
+      return this.wrapSuccess();
+    } else {
+      await this.statisticPokemonService.save({
+        ...existedStatistic,
+        [actionPokemonStatisticDto.action]: existedStatistic[actionPokemonStatisticDto.action] + 1,
+      });
+
+      return this.wrapSuccess();
+    }
   }
 }
