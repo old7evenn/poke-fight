@@ -13,7 +13,7 @@
     "moduleResolution": "Bundler",
     "paths": {
       "@/*": ["./src/*"],
-      "@/generated/*": ["./generated/*"]
+      "@/generated*": ["./generated/*"]
     },
     "allowImportingTsExtensions": true,
 

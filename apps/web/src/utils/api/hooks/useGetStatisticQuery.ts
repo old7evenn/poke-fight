@@ -10,6 +10,6 @@ export const useGetStatisticQuery = (
 ) =>
   useQuery({
     queryKey: ['statistic', params.pokemonId],
-    queryFn: () => getStatisticPokemon({ params, ...settings.config }),
+    queryFn: () => getStatisticPokemon({ params: params, ...settings.config }),
     ...settings?.options,
   });

@@ -13,15 +13,15 @@ export class AppService implements OnApplicationBootstrap {
 
     if (pokemons.length >= MAX_POKEMON_COUNTS) {
       console.log('pokemons seed:', pokemons.length, 'already injected');
-      return
-    };
+      return;
+    }
 
-    await this.pokemonService.clear()
+    await this.pokemonService.clear();
 
     const pokemonsResponse = await getPokemons({
       params: { limit: MAX_POKEMON_COUNTS, offset: 0 },
     });
-    
+
     const poromises = pokemonsResponse.results.map(async pokemon => {
       const pokemonResponse = await getPokemon({
         params: { id: pokemon.name },

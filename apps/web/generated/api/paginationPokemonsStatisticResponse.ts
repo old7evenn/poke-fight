@@ -4,9 +4,9 @@
  * Poke - Fight
  * OpenAPI spec version: 1.0
  */
-import type { Pokemon } from './pokemon';
+import type { PokemonStatistic } from './pokemonStatistic';
 
-export interface PaginationPokemonsResponse {
+export interface PaginationPokemonsStatisticResponse {
   /** The total number of items available */
   itemCount: number;
   /** Indicates if there is a next page available */
@@ -17,10 +17,10 @@ export interface PaginationPokemonsResponse {
   page: number;
   /** The total number of pages available based on the item count and take */
   pageCount: number;
-  /** Pokemons */
-  pokemons: Pokemon[];
+  /** Pokemon statistics */
+  pokemons: PokemonStatistic[];
+
   /** Indicates if there is a previous page available */
   prev: boolean;
-
   limit: number;
 }

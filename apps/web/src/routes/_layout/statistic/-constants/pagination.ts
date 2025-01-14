@@ -1,3 +1,3 @@
 export const POKEMONS_REQUESTS_PAGINATION = {
-  LIMIT: 2,
+  LIMIT: 10,
 };

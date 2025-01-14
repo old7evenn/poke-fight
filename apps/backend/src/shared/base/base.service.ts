@@ -1,4 +1,4 @@
-import type { Repository } from 'typeorm';
+import type { FindManyOptions, Repository } from 'typeorm';
 
 export class BaseService<T> {
   constructor(private repository: Repository<T>) {}
@@ -26,7 +26,7 @@ export class BaseService<T> {
   async delete(...params: Parameters<typeof this.repository.delete>) {
     return await this.repository.delete(...params);
   }
-  
+
   async clear(...params: Parameters<typeof this.repository.clear>) {
     return await this.repository.clear(...params);
   }

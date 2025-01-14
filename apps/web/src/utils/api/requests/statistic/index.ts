@@ -1,7 +1,9 @@
-import { PokemonControllerGetPokemonsParams, StatisticsResponse } from '@/generated/api';
+import { PokemonStatisticResponse, StatisticControllerGetSatisticsParams } from '@/generated/api';
 import { pokeApi } from '@/utils/api/instance';
 
-export type GetPokemonsStatRequestConfig = RequestConfig<PokemonControllerGetPokemonsParams>;
+export type GetStatisticsParams = StatisticControllerGetSatisticsParams;
+
+export type GetPokemonsStatRequestConfig = RequestConfig<GetStatisticsParams>;
 
 export const getStatistics = ({ config, params }: GetPokemonsStatRequestConfig) =>
-  pokeApi.get<StatisticsResponse>(`statistic/pokemons`, { params, ...config });
+  pokeApi.get<PokemonStatisticResponse>(`statistic/pokemons`, { params, ...config });

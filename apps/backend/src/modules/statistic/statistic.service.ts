@@ -1,4 +1,4 @@
-import { BaseService } from '@/shared';
+import { BaseService, PaginationDto } from '@/shared';
 import { Injectable } from '@nestjs/common';
 import { Statistic } from './entities';
 import { Repository } from 'typeorm';

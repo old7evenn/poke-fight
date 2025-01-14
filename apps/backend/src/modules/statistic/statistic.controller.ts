@@ -15,13 +15,15 @@ import { PokemonService, PokemonsResponse } from '../pokemon';
 import { GetPokemonDto } from '../pokemon/dto';
 import { SelectQueryBuilder } from 'typeorm';
 import { PokemonStatistic } from './entities';
+import { PokemonStatisticGateway } from './pokemon-statistic.gateway';
 
 @ApiTags('statistic')
 @Controller('/statistic')
 export class StatisticController extends BaseResolver {
   constructor(
     private readonly statisticPokemonService: StatisticService,
-    private readonly pokemonService: PokemonService
+    private readonly pokemonService: PokemonService,
+    private readonly pokemonStatisticGateway: PokemonStatisticGateway
   ) {
     super();
   }
@@ -67,15 +69,17 @@ export class StatisticController extends BaseResolver {
       'statistic.pokemonId = pokemon.pokemonId'
     ) as SelectQueryBuilder<PokemonStatistic>;
 
-    pokemonQuery.addSelect(`
+    pokemonQuery.addSelect(
+      `
       CASE
         WHEN statistic.smash IS NULL AND statistic.pass IS NULL THEN 0
         ELSE statistic.smash + statistic.pass
       END
-    `, 'raiting');
+    `,
+      'raiting'
+    );
 
     pokemonQuery.orderBy('raiting', 'DESC');
-
 
     if (getPokemonDto.name) {
       pokemonQuery.where('pokemon.name ILIKE :name', { name: `%${getPokemonDto.name}%` });
@@ -85,7 +89,6 @@ export class StatisticController extends BaseResolver {
       pokemonQuery.where('pokemon.types && :types', { types: getPokemonDto.types });
     }
 
-    
     pokemonQuery.skip(getPokemonDto.offset).take(getPokemonDto.limit);
 
     const [pokemons, itemCount] = await pokemonQuery.getManyAndCount();
@@ -127,7 +130,7 @@ export class StatisticController extends BaseResolver {
     });
     return this.wrapSuccess({ statistic });
   }
-  
+
   @Post('/action')
   @ApiOperation({ summary: 'Create statistic' })
   @ApiBody({ type: ActionPokemonDto })
@@ -154,15 +157,36 @@ export class StatisticController extends BaseResolver {
         smash: 0,
         [actionPokemonStatisticDto.action]: 1,
       });
-
-      return this.wrapSuccess();
     } else {
       await this.statisticPokemonService.save({
         ...existedStatistic,
         [actionPokemonStatisticDto.action]: existedStatistic[actionPokemonStatisticDto.action] + 1,
       });
-
-      return this.wrapSuccess();
     }
+
+    const pokemonQuery = (
+      await this.pokemonService.createQueryBuilder('pokemon')
+    ).leftJoinAndMapOne(
+      'pokemon.statistic',
+      'statistic',
+      'statistic',
+      'statistic.pokemonId = pokemon.pokemonId'
+    ) as SelectQueryBuilder<PokemonStatistic>;
+
+    pokemonQuery.addSelect(
+      `
+        CASE
+          WHEN statistic.smash IS NULL AND statistic.pass IS NULL THEN 0
+          ELSE statistic.smash + statistic.pass
+        END
+      `,
+      'raiting'
+    );
+
+    pokemonQuery.orderBy('raiting', 'DESC');
+
+    await this.pokemonStatisticGateway.broadcastStatisticUpdate();
+
+    return this.wrapSuccess();
   }
 }

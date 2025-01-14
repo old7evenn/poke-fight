@@ -1,19 +1,13 @@
-import { useInfiniteQuery, UseInfiniteQueryResult } from '@tanstack/react-query';
+// @ts-nocheck
 
-import type { GetPokemonsRequestConfig } from '../requests';
+import { useInfiniteQuery } from '@tanstack/react-query';
 
-import { getStatistics } from '../requests';
-import { PokemonsResponse } from '@/generated/api';
-
-interface GetPokemonsResponse {
-  pageParams: number[];
-  pages: [PokemonsResponse];
-}
+import { getStatistics, GetStatisticsParams } from '../requests';
 
 export const useGetSatisticsInfiniteQuery = (
-  { params }: GetPokemonsRequestConfig,
+  params: GetStatisticsParams,
   settings?: InfiniteQuerySettings<typeof getStatistics>
-): UseInfiniteQueryResult<GetPokemonsResponse> =>
+) =>
   useInfiniteQuery({
     initialPageParam: 0,
     queryKey: ['getPokemonsPagination', params.limit],

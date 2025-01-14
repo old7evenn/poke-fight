@@ -6,6 +6,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { StatisticModule } from './modules/statistic';
 import { PokemonService } from './modules/pokemon';
 import * as dotenv from 'dotenv';
+import { PokemonStatisticGateway } from './modules/statistic/pokemon-statistic.gateway';
 dotenv.config();
 
 @Module({

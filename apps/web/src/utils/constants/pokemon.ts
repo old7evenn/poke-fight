@@ -1,1 +1,1 @@
-export const MAX_POKEMON_COUNTS = 15;
+export const MAX_POKEMON_COUNTS = 65;
