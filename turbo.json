@@ -3,8 +3,7 @@
   "ui": "tui",
   "tasks": {
     "build": {
-      "dependsOn": ["^build"],
-      "outputs": ["apps/web/dist/**", "dist/**"]
+      "dependsOn": ["^build"]
     },
     "format": {},
     "lint": {
