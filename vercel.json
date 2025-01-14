@@ -1,0 +1,17 @@
+{
+  "version": 2,
+  "buildCommand": "pnpm turbo build",
+  "outputDirectory": "apps/web/dist",
+  "builds": [
+    {
+      "src": "apps/web/package.json",
+      "use": "@vercel/static"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "apps/web/dist/$1"
+    }
+  ]
+}
